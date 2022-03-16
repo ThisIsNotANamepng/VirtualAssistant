@@ -1,0 +1,6 @@
+1. Use ML to let Melissa be able to tell a sentence's inflection (is the person angry, sad, none, etc.)
+
+Use ml to tell psitive or negative voice (https://replit.com/@CodeEatsPennies/MLNegativePositive#main.py), if question is negative, ask if user is ok or tell a joke or tell uplifting news
+
+Chat server (run basic python chat server, read other user responses, can send messages)
+

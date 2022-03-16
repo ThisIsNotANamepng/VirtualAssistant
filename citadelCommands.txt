@@ -1,0 +1,47 @@
+#def runDiagnostics(level, system):
+#  level 5 = check if (all parts of) server are up
+
+#  level 4 = sign in with diagnostic test user and psycially use all parts of the system
+
+#  level 3 = shut down and restart system
+
+#  level 2 = restart server, ssh into and manually check all files exist and are reachable
+
+#  level 1 = restart server, ssh into and manually check all files exist and are reachable, log in with test user and test all parts of the system, check if the os or system is throwing any errors
+
+#def secureTheSystem(server):
+
+#  level none(not specified) = shut down system
+
+#  level 10 = check if any users have been added recently
+
+#  level 9 = monitor each system, any activity is reported immediately
+
+#  level 8 = eject all user currently signed in, shut down vpn
+
+#  level 7 = restart server, shut down vpn
+
+#  level 6 = delete all usernames and passwords except admin, shut down vpn
+
+#  level 5 = delete all usernames and passwords, shut down vpn
+
+#  level 4 = shut down server, shut down vpn
+
+#  level 3 = shut down system
+
+#  level 2 = delete all of the data in entire system, shut down vpn
+
+#  level 1 = delete all data in system, shutdown, (close ports and access to server)
+
+  
+
+#  if any above commands fail (server rejects commands) immidiately alert user and attempt to shut down the entire system
+
+#def nukeIt(): 
+#  delete all data in every server
+
+#def cleanSlate():
+#  delete entire system
+
+#def shutdown(server):
+#  shutdown(server)
