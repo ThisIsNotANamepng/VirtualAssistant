@@ -1,54 +1,92 @@
 import random
 import datetime
+from Cryptodome.Hash import SHA3_512
+from os.path import exists
+
 
 name = "Fake"
 assistantName = "Melissa"
+query = "what time is it"
+query = query.lower()
 
-import chat
+
+access = False
+#import chat
 #query = input("Query:   ")
-def authenticate(passphrase):
-  from Cryptodome.Hash import SHA3_512
+
+def speak(response):
+  print(response)
+
+def ask(question):
+  #Say something and then listen for a response
+  speak(question)
+  answer = "Listen for a repsone"
+  return answer
+  
+def authenticate():
+  #passphrase = input("What's the passphrase?")
+  test_passphrase = "elephants are lovely"
+  
+  test_passphrase = test_passphrase.lower()
 
   h_obj = SHA3_512.new()
-  h_obj.update(bytes(passphrase, 'utf-8'))
-  passphrase = (h_obj.hexdigest())
+  h_obj.update(bytes(test_passphrase, 'utf-8'))
+  test_passphrase = (h_obj.hexdigest())
+  
+  abcdfff = open("passphrase.txt", "r")
+  passphrase = abcdfff.read()
+  abcdfff.close()
 
-#  fff = open("passphrase.txt", "w")
-#  fff.write(passphrase)
-#  fff.close()
-
-
+  if test_passphrase == passphrase:
+    speak("Access granted  ")
+    access = True
+  else:
+    speak("Access denied")
+    access = False
 
 
 def hello():
   now = datetime.datetime.now()
   h = now.hour
   
-  
   if h<12:
-    greetings = ["Good Morning", "Good morning "+name]
+    greetings = ["Good Morning", "Good morning "]
 
   if h<14:
-    greetings = ["Good Afternoon", "Good afternoon "+name]
+    greetings = ["Good Afternoon", "Good afternoon "]
   
   if h<24:
-    greetings = ["Good Evening", "Good evening "+name]
+    greetings = ["Good Evening", "Good evening "]
 
-  print(random.choice(greetings))
+  speak(random.choice(greetings))
 
 def whatTimeIsIt():
   now = datetime.datetime.now()
   h = (now.hour)
   m = (now.minute)
 
-  if h <13:
-    
-    print("It is ", h, m, "in the morning")
-  
-  if h >13:
-    h = h-12
-    print("It is ", h, m, "in the afternoon")
 
+  if h < 13:
+    sh=str(h)
+    sm=str(m)
+    text = "It is "+ sh + " " + sm+ " in the morning"
+    
+    speak(text)
+  
+  if h > 13:
+    sh=str(h)
+    sm=str(m)
+    h = h-12
+    text = "It is "+ sh + " " + sm + " in the afternoon"
+    
+    speak(text)
+
+def turnOnTheLights():
+  #Turn in the secret stuff
+  speak("what?")
+
+
+  
 def whatsTheDateToday():
   now = datetime.datetime.now()
   b = (str(now.day))
@@ -90,7 +128,7 @@ def whatsTheDateToday():
   year = str(now.year)
   day = str(now.day)
 
-  print("It is the "+day + attatch+ " of "+ month+", "+ year)
+  speak("It is the "+day + attatch+ " of "+ month+", "+ year)
 
 def calculate(fnum, operation, snum):
   if operation == "addition":
@@ -98,74 +136,100 @@ def calculate(fnum, operation, snum):
     fnum = str(fnum)
     snum = str(snum)
     answer = str(answer)
-    print(fnum+" plus "+snum+" equals "+answer)
+    speak(fnum+" plus "+snum+" equals "+answer)
   if operation == "multiplication":
     answer = fnum*snum
     fnum = str(fnum)
     snum = str(snum)
     answer = str(answer)
-    print(fnum+" times "+snum+" equals "+answer)
+    speak(fnum+" times "+snum+" equals "+answer)
   if operation == "subtraction":
     answer = fnum-snum
     fnum = str(fnum)
     snum = str(snum)
     answer = str(answer)
-    print(fnum+" minus "+snum+" equals "+answer)
+    speak(fnum+" minus "+snum+" equals "+answer)
   if operation == "division":
     answer = fnum/snum
     fnum = str(fnum)
     snum = str(snum)
     answer = str(answer)
-    print(fnum+" divided by "+snum+" equals "+answer)
+    speak(fnum+" divided by "+snum+" equals "+answer)
     
-def open(application):
-  print("open app")
+
 
 def weather(time):
   if time == "today":
-    print("right now")
+    speak("right now")
   if time == "tomorrow":
-    print("tomorrow")
+    speak("tomorrow")
 
-def isItUp(site):
-  from pythonping import ping
 
-  #have it be able to tell a difference from home servers to websites
 
 def makeANote():
-  title = input("What do you want the title to be? ")
-  content = input("What do you want to write ")
+  title = ask("What do you want the title to be? ")
+  content = ask("What do you want to write? ")
 
-  #f = open("notes/"+title+".txt", "x")
-  #f.write(content)
-  #f.close()#This will overwrite any other notes with the same title
+  path = "notes/"+title+".txt"
+  f = open(path, "w")
+  f.write(content)
+  f.close()
+  file_exists = exists(path)
+
+  if file_exists == True:
+    speak("Note taken succesfully")
+  else:
+    speak("Something went wrong, note not saved")
 
 def iPutThisHere():
-  queryl = []
-  queryl.append(query)
-  queryl = (queryl[0].split())
-  print(queryl)
-
-
-  position = (queryl.index("my"))
-
-  print("You put your "+queryl[position+1]+" "+queryl[position+2]+  " your "+queryl[position+4])
+  thing = ask("What are you leaving?")
+  place = ask("Where are you leaving it?")
+  speak("You put your " + thing + " in " + place)
+  #Need to make this enter into a database
 
 def identify():
-  print("I am "+assistantName+", your personal assistant")
+  speak("I am "+assistantName+", your personal assistant")
 
 #def howToSpell:
 
+def dayOfTheWeek():
+  dn = datetime.datetime.today().weekday()
+  if dn == 0:
+    day = "Monday"
+  if dn == 1:
+    day = "Tuesday"
+  if dn == 2:
+    day = "Wednesday"
+  if dn == 3:
+    day = "Thursday"
+  if dn == 4:
+    day = "Friday"
+  if dn == 5:
+    day = "Saturday"
+  if dn == 6:
+    day = "Sunday"
+
+
+  speak("Today is "+day)
 
 
 if "good morning" in query or "hello" in query or "good afternoon" in query or "good evening" in query:
   hello()
 elif "put my" in query or "put the" in query:
   iPutThisHere()
-elif "make a note" in query:
+elif "make a note" in query or "take a note" in query:
   makeANote()
 elif "who are you" in query:
   identify()
-
+elif "authenticate" in query:
+  authenticate()
+elif "what time is it" in query or query == "time":
+  whatTimeIsIt()
+elif "turn on the lights" in query:
+  turnOnTheLights()
+elif "what day is it" in query or "what's the date" in query:
+  whatsTheDateToday()
+elif "day of the week" in query:
+  dayOfTheWeek()
 
 
